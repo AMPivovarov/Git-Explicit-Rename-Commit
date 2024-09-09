@@ -1,0 +1,27 @@
+<idea-plugin package="com.jetbrains.git.explicit.rename">
+    <id>com.jetbrains.git.explicit.rename</id>
+    <name>Git Explicit Rename Commit</name>
+    <vendor email="Aleksey.Pivovarov@jetbrains.com" url="https://www.jetbrains.com/">JetBrains</vendor>
+
+    <description><![CDATA[
+    Allows automatically splitting the git commits into two if there are renames present.<br>
+    This makes rename explicit and reduces the burden on git's automatic rename detection.
+    ]]></description>
+
+    <dependencies>
+        <plugin id="com.intellij.modules.vcs"/>
+        <plugin id="Git4Idea"/>
+    </dependencies>
+
+    <idea-version since-build="221.5080.210"/>
+
+    <extensions defaultExtensionNs="Git4Idea">
+        <GitCheckinExplicitMovementProvider implementation="com.jetbrains.git.explicit.rename.GitExplicitRenameProvider"/>
+    </extensions>
+
+    <applicationListeners>
+        <listener class="com.jetbrains.git.explicit.rename.GitExplicitRenameListener"
+                  topic="com.intellij.openapi.vfs.newvfs.BulkFileListener"/>
+    </applicationListeners>
+
+</idea-plugin>
