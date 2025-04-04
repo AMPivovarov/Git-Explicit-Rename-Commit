@@ -3,6 +3,8 @@
 /gradle/
 gradlew*
 
+.intellijPlatform
+
 .idea/**
 !.idea/vcs.xml
 !.idea/codeStyles

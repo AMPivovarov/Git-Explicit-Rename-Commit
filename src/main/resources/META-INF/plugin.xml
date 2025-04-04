@@ -13,8 +13,6 @@
         <plugin id="Git4Idea"/>
     </dependencies>
 
-    <idea-version since-build="221.5080.210"/>
-
     <extensions defaultExtensionNs="Git4Idea">
         <GitCheckinExplicitMovementProvider implementation="com.jetbrains.git.explicit.rename.GitExplicitRenameProvider"/>
     </extensions>

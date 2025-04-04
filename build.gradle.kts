@@ -1,27 +1,43 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-  kotlin("jvm") version "1.8.0"
-  id("org.jetbrains.intellij") version "1.13.3"
-}
-
-repositories {
-  mavenCentral()
+  id("java")
+  id("org.jetbrains.kotlin.jvm") version "1.9.25"
+  id("org.jetbrains.intellij.platform") version "2.3.0"
 }
 
 group = "com.jetbrains"
-version = "1.0.0"
+version = "1.0.1"
 
-// https://github.com/JetBrains/gradle-intellij-plugin/
-// https://www.jetbrains.com/intellij-repository/snapshots/
-// Ex: "IC-2021.1", "IC-221.4501-EAP-CANDIDATE-SNAPSHOT"
-intellij {
-  version.set("IC-221.5080.210")
-  updateSinceUntilBuild.set(false)
-  plugins.set(listOf("git4idea"))
+repositories {
+  mavenCentral()
+  intellijPlatform {
+    defaultRepositories()
+  }
 }
 
-tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
-  kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=enable")
+dependencies {
+  intellijPlatform {
+    create("IC", "2024.3")
+    bundledPlugins("Git4Idea")
+
+    // Add necessary plugin dependencies for compilation here, example:
+    // bundledPlugin("com.intellij.java")
+  }
+}
+
+intellijPlatform {
+  pluginConfiguration {
+    ideaVersion {
+      sinceBuild = "243"
+    }
+  }
+}
+
+tasks {
+  withType<JavaCompile> {
+    sourceCompatibility = "21"
+    targetCompatibility = "21"
+  }
+  withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.jvmTarget = "21"
+  }
 }
